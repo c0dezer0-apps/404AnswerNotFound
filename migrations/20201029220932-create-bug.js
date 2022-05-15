@@ -8,20 +8,25 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
+      user: {
+        type: Sequelize.STRING
+      },
       error: {
         type: Sequelize.TEXT
       },
-      location: {
-        type: Sequelize.STRING
+      bugCategory: {
+        type: Sequelize.ARRAY(Sequelize.STRING)
       },
       activity: {
         type: Sequelize.STRING
       },
-      user: {
+      location: {
         type: Sequelize.STRING
       },
       status: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        defaultValue: 'Untracked',
+        allowNull: false
       },
       createdAt: {
         allowNull: false,

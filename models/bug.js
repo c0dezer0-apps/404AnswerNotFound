@@ -1,6 +1,6 @@
 'use strict';
 const {
-  Model, DatabaseError
+  Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class bug extends Model {
@@ -18,7 +18,12 @@ module.exports = (sequelize, DataTypes) => {
     location: DataTypes.STRING,
     activity: DataTypes.STRING,
     user: DataTypes.STRING,
-    status: DataTypes.STRING
+    bugCategory: DataTypes.ARRAY[DataTypes.STRING],
+    status: {
+      allowNull: false,
+      defaultValue: "Untracked",
+      type: DataTypes.STRING
+    }
   }, {
     sequelize,
     modelName: 'bug',

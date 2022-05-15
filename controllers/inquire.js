@@ -3,6 +3,8 @@ const express = require('express');
 const isLoggedIn = require('../middleware/isLoggedIn');
 const router = express.Router();
 
+const { createQuestion } = require('../api/dbOps');
+
 router.use((req, res, next) => {
      res.locals.alerts = req.flash();
      res.locals.currentUser = req.user;
@@ -16,28 +18,10 @@ router.use((req, res, next) => {
 router.post('/create/inquisition', (req, res) => {
      // Should redirect to the /inquiry/:id route below, showing the newly created inquisition.
      if (req.user) {
-          const { username } = req.user['dataValues'];
-          db['question']
-               .create({
-                    createdBy: username,
-                    summary: req.body.summary,
-                    details: req.body.details,
-               })
-               .then(question => {
-                    console.log(question);
-                    res.redirect('/');
-               })
-               .catch(err => {
-                    db['bug'].create({
-                         error: `${err}`,
-                         location: 'create_inquisition_route',
-                         activity: `Creating inquisition`,
-                         user: username,
-                         status: 'Untracked',
-                    });
-               });
+       const { username } = req.user['dataValues'];
+       createQuestion(username, req.body.summary, req.body.details).then(res.redirect('/'));
      } else {
-          res.redirect('/auth/login');
+       res.redirect('/auth/login');
      }
 });
 
