@@ -1,10 +1,10 @@
 <div class="container-fluid">
 	<main>
 		<div class="container" id="content_holder">
-			<section id="question">
-				<div id="question_container">
-					<div id="question_content">
-						<header id="question_short">
+			<section id="problem">
+				<div id="problem_container">
+					<div id="problem_content">
+						<header id="problem_short">
 							<h3><%= data.dataValues.summary %> </h3>
 						</header>
 						<article id="content">
@@ -26,12 +26,12 @@
 									</time>
 								</span>
 								<span id="delete_button_container">
-									<%# Creates a delete button if logged in user owns question %>
+									<%# Creates a delete button if logged in user owns problem %>
 									<% if (meta.isUserLoggedIn && meta.loggedInUser == data.dataValues.createdBy) { %>
-									<form id="delete_question" method="POST"
-										  action="/inquire/<%= data.dataValues.id %>/?_method=DELETE">
+									<form id="delete_problem" method="POST"
+										  action="/investigate/<%= data.dataValues.id %>/?_method=DELETE">
 										<span>
-											<button name="deleteQuestion" id="delete_question" class="btn btn-link"
+											<button name="deleteProblem" id="delete_problem" class="btn btn-link"
 												role="button" type="submit">Delete</button>
 										</span>
 									</form>
@@ -43,26 +43,26 @@
 				</div>
 			</section>
 			<hr />
-			<section id="answers">
+			<section id="solutions">
 				<header>
-					<h3>Answers</h3>
+					<h3>Solutions</h3>
 				</header>
 				<% for (let i = 0; i < data2.length; i++ ) { %>
 				<section>
-					<div class="answer_container">
-						<div class="answer_content">
-							<%= data2[i].dataValues.createdBy %> answered
+					<div class="solution_container">
+						<div class="solution_content">
+							<%= data2[i].dataValues.createdBy %> solved
 							<time>
 								<%= data2[i].dataValues.createdAt.toLocaleString() %>
 							</time>
-							<%# Adds an edit button if answer belongs to logged in user. %>
+							<%# Adds an edit button if solution belongs to logged in user. %>
 							<% if (meta.isUserLoggedIn && meta.loggedInUser == data.dataValues.createdBy) { %>
 								<span>
-									<button name="editAnswer" id="edit_answer" class="btn btn-link"
+									<button name="editSolution" id="edit_solution" class="btn btn-link"
 										role="button">Edit</button>
 								</span>
 							<% } %>
-							<article id="answer_content">
+							<article id="solution_content">
 								<p><%= data2[i].dataValues.content %></p>
 							</article>
 						</div>
@@ -74,7 +74,7 @@
 		</div>
 		<% if (meta.isUserLoggedIn && meta.loggedInUser === data.dataValues.createdBy) { %>
 		<div id="edit">
-			<form  method="POST" action="/inquire/<%= data.dataValues.id %>/?_method=PUT">
+			<form  method="POST" action="/investigate/<%= data.dataValues.id %>/?_method=PUT">
 				<div class="form-group">
 					<div class="container" id="sum_container">
 						<label for="summary">Summary: </label>

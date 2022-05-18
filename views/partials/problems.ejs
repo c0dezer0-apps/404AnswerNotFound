@@ -1,0 +1,10 @@
+<% for (let i = 0; i < problems.length; i++) { %>
+	<article id="<%= problems[i].createdBy %>_question" class="recent_problem">
+		<header class="author"><%= problems[i].createdBy %> asked <time><%= problems[i].createdAt.toLocaleString() %></time></header>
+		<small class="problem">
+			<%= problems[i].summary %><br />
+			<%= problems[i].details.slice(0, 300) %> ... <a href="/investigate/problem/<%= problems[i].id %> ">Read More</a>
+		</small>
+		<hr>
+	</article>
+<% } %>
