@@ -25,11 +25,11 @@ __metadata:
     method-override: ^3.0.0
     mocha: ^10.0.0
     morgan: ^1.10.0
-    passport: ^0.5.2
+    passport: ^0.5.3
     passport-local: ^1.0.0
     pg: ^8.7.3
     prettier: ^2.6.2
-    sequelize: ^6.19.0
+    sequelize: ^6.19.2
     sequelize-cli: ^6.4.1
     serverless-http: ^3.0.1
     supertest: ^6.2.3
@@ -3523,13 +3523,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"passport@npm:^0.5.2":
-  version: 0.5.2
-  resolution: "passport@npm:0.5.2"
+"passport@npm:^0.5.3":
+  version: 0.5.3
+  resolution: "passport@npm:0.5.3"
   dependencies:
     passport-strategy: 1.x.x
     pause: 0.0.1
-  checksum: be17a64a069f412299dea342fea1f4c755aea66fcd71e9422c5e254be18b069a39b00d141e4c63fb852f1bfea6030e8e170593d7f0db5c197fddec781e9e8de4
+  checksum: 5430b31b7e2066cff9954c8b151fb44479faf98ea7de210d4388961168a00990dbe52d3cc110d4b778650ebab7613ff4bdda5bbe1e297eb35298c6b83456f507
   languageName: node
   linkType: hard
 
@@ -4028,9 +4028,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sequelize@npm:^6.19.0":
-  version: 6.19.0
-  resolution: "sequelize@npm:6.19.0"
+"sequelize@npm:^6.19.2":
+  version: 6.19.2
+  resolution: "sequelize@npm:6.19.2"
   dependencies:
     "@types/debug": ^4.1.7
     "@types/validator": ^13.7.1
@@ -4065,7 +4065,7 @@ __metadata:
       optional: true
     tedious:
       optional: true
-  checksum: e1faa389fe8bf4e58f4781763d313e6a28b5cf8376f9c34ba6a6af9f158a309d8fa30277706bbee004caa8068a5f3030cf1620735a2d9f84a33f204ab2dae2f2
+  checksum: f013d9fd8404226e032864987ee0dd2013468fee9e9e5b70a8c7c63ef58c873e007ed6a498c63b0681893c1ceefbb322d0056932b25605408634dfc33f78c9e8
   languageName: node
   linkType: hard
 
