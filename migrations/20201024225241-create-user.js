@@ -5,8 +5,13 @@ module.exports = {
       id: {
         allowNull: false,
         autoIncrement: true,
-        primaryKey: true,
         type: Sequelize.INTEGER
+      },
+      uuid: {
+        allowNull: false,
+        primaryKey: true,
+        defaultValue: Sequelize.UUIDV4,
+        type: Sequelize.UUID,
       },
       username: {
         type: Sequelize.STRING(25)
@@ -41,9 +46,6 @@ module.exports = {
       },
       rating: {
         type: Sequelize.STRING
-      },
-      points: {
-        type: Sequelize.INTEGER
       },
       createdAt: {
         allowNull: false,

@@ -1,24 +1,27 @@
 'use strict';
 const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-	class question extends Model {
+	class problem extends Model {
 		/**
 		 * Helper method for defining associations.
 		 * This method is not a part of Sequelize lifecycle.
 		 * The `models/index` file will call this method automatically.
 		 */
 		static associate(models) {
-			models.question.belongsTo(models.user, {
-				foreignKey: 'createdBy',
-				target: 'username',
+			models.problem.belongsTo(models.user, {
+				foreignKey: 'username',
+				target: 'createdBy',
 			});
-			models.question.hasMany(models.answer, {
-				foreignKey: 'qid',
-			});
+			models.problem.hasMany(models.solution);
 		}
 	}
-	question.init(
-		{
+	problem.init(
+    {
+      pid: {
+        allowNull: false,
+        unique: true,
+        type: DataTypes.STRING,
+      },
 			category: {
 				type: DataTypes.STRING,
 			},
@@ -55,16 +58,13 @@ module.exports = (sequelize, DataTypes) => {
 						args: 300,
 						msg: 'Details need to be at least 300 characters.',
 					},
-					
 				}
 			},
-			upVotes: DataTypes.INTEGER,
-			downVotes: DataTypes.STRING,
 		},
 		{
 			sequelize,
-			modelName: 'question',
+			modelName: 'problem',
 		}
 	);
-	return question;
+	return problem;
 };

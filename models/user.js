@@ -10,11 +10,11 @@ module.exports = (sequelize, DataTypes) => {
 		 * The `models/index` file will call this method automatically.
 		 */
 		static associate(models) {
-			models.user.hasMany(models.question, {
+			models.user.hasMany(models.problem, {
 				foreignKey: 'createdBy',
 				target: 'username',
 			});
-			models.user.hasMany(models.answer, {
+			models.user.hasMany(models.solution, {
 				foreignKey: {
 					name: 'createdBy',
 				},
@@ -33,7 +33,13 @@ module.exports = (sequelize, DataTypes) => {
   }
 
 	user.init(
-		{
+    {
+      uuid: {
+        allowNull: false,
+        primaryKey: true,
+        defaultValue: DataTypes.UUIDV4,
+        type: DataTypes.UUID,
+      },
 			username: {
 				type: DataTypes.STRING(25),
 				allowNull: false,
@@ -154,10 +160,6 @@ module.exports = (sequelize, DataTypes) => {
 			},
 			rating: {
 				type: DataTypes.STRING,
-				allowNull: true,
-			},
-			points: {
-				type: DataTypes.INTEGER,
 				allowNull: true,
 			},
 		},

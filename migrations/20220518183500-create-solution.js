@@ -1,0 +1,55 @@
+'use strict';
+
+module.exports = {
+  async up (queryInterface, Sequelize) {
+    await queryInterface.createTable('solutions', {
+      id: {
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        type: Sequelize.INTEGER,
+      },
+      sid: {
+        allowNull: false,
+        unique: true,
+        type: Sequelize.STRING,
+      },
+      content: {
+        allowNull: false,
+        type: Sequelize.TEXT,
+      },
+      verified: {
+        type: Sequelize.DATE
+      },
+      solvedCount: {
+        allowNull: false,
+        defaultValue: 0,
+        type: Sequelize.INTEGER,
+      },
+      createdBy: {
+			  allowNull: false,
+        type: Sequelize.STRING,
+      },
+      lastModifiedBy: {
+			  allowNull: false,
+			  type: Sequelize.STRING,
+      },
+      lastModifiedDate: {
+			  allowNull: false,
+			  type: Sequelize.DATE,
+      },
+      createdAt: {
+        allowNull: false,
+        type: Sequelize.DATE,
+      },
+      updatedAt: {
+        allowNull: false,
+        type: Sequelize.DATE,
+      }
+    });
+  },
+
+  async down (queryInterface, Sequelize) {
+    await queryInterface.dropTable('solutions');
+  }
+};
