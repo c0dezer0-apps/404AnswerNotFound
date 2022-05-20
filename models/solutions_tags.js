@@ -3,23 +3,24 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class solution_tags extends Model {
+  class solutions_tags extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      models.solution_tags.belongsTo(models.solution, { foreignKey: 'sid' });
-      models.solution_tags.belongsTo(models.tag, { foreignKey: 'tid' });
+      models.solutions_tags.belongsTo(models.solution);
+      models.solutions_tags.belongsTo(models.tag);
     }
   }
-  solution_tags.init({
-    sid: DataTypes.STRING,
-    tid: DataTypes.INTEGER
+  solutions_tags.init({
+    solutionId: DataTypes.STRING,
+    tagId: DataTypes.INTEGER
   }, {
     sequelize,
-    modelName: 'solution_tags',
+    modelName: 'solutions_tags',
+    timestamps: false,
   });
-  return solution_tags;
+  return solutions_tags;
 };
