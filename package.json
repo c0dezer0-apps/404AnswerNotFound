@@ -3,6 +3,8 @@
   "description": "A tech-based app for finding solutions to coding problems.",
   "version": "2.0.0",
   "main": "server.js",
+  "private": true,
+  "type": "module",
   "author": "Brian Blankenship, Caleb Afework, Antonio Reyes",
   "scripts": {
     "start": "node server.js",

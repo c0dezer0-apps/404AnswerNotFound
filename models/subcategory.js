@@ -1,8 +1,7 @@
 'use strict';
-const {
-  Model, Sequelize
-} = require('sequelize');
-module.exports = (sequelize, DataTypes) => {
+import { Model } from 'sequelize';
+
+export default (sequelize, DataTypes) => {
   class subcategory extends Model {
     /**
      * Helper method for defining associations.
@@ -14,6 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       models.subcategory.hasMany(models.problem)
     }
   }
+
   subcategory.init({
     name: DataTypes.STRING,
     subcatId: {

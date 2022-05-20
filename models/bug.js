@@ -1,8 +1,7 @@
 'use strict';
-const {
-  Model, DatabaseError
-} = require('sequelize');
-module.exports = (sequelize, DataTypes) => {
+import { Model } from 'sequelize';
+
+export default (sequelize, DataTypes) => {
   class bug extends Model {
     /**
      * Helper method for defining associations.
@@ -13,6 +12,7 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   };
+
   bug.init({
     error: DataTypes.TEXT,
     location: DataTypes.STRING,

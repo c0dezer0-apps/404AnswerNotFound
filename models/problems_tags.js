@@ -1,8 +1,7 @@
 'use strict';
-const {
-  Model
-} = require('sequelize');
-module.exports = (sequelize, DataTypes) => {
+import { Model } from 'sequelize';
+
+export default (sequelize, DataTypes) => {
   class problems_tags extends Model {
     /**
      * Helper method for defining associations.
@@ -14,6 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       models.problems_tags.belongsTo(models.tag);
     }
   }
+
   problems_tags.init({
     problemId: DataTypes.STRING,
     tagId: DataTypes.INTEGER

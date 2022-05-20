@@ -1,8 +1,7 @@
 'use strict';
-const {
-  Model
-} = require('sequelize');
-module.exports = (sequelize, DataTypes) => {
+import { Model } from 'sequelize';
+
+export default (sequelize, DataTypes) => {
   class category extends Model {
     /**
      * Helper method for defining associations.
@@ -15,12 +14,14 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'problemId',
         sourceKey: 'catId'
       });
+
       models.category.hasMany(models.subcategory, {
         foreignKey: 'subcatId',
         sourceKey: 'catId'
       })
     }
   };
+
   category.init({
     catId: {
       allowNull: false,
