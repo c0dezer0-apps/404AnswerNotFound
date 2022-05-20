@@ -10,15 +10,8 @@ module.exports = (sequelize, DataTypes) => {
 		 * The `models/index` file will call this method automatically.
 		 */
 		static associate(models) {
-			models.user.hasMany(models.problem, {
-				foreignKey: 'createdBy',
-				target: 'username',
-			});
-			models.user.hasMany(models.solution, {
-				foreignKey: {
-					name: 'createdBy',
-				},
-			});
+			models.user.hasMany(models.problem);
+			models.user.hasMany(models.solution);
 		}
 
 		validPassword(passwordTyped) {
@@ -34,12 +27,6 @@ module.exports = (sequelize, DataTypes) => {
 
 	user.init(
     {
-      uuid: {
-        allowNull: false,
-        primaryKey: true,
-        defaultValue: DataTypes.UUIDV4,
-        type: DataTypes.UUID,
-      },
 			username: {
 				type: DataTypes.STRING(25),
 				allowNull: false,

@@ -5,10 +5,17 @@ module.exports = {
       id: {
         allowNull: false,
         autoIncrement: true,
-        primaryKey: true,
         type: Sequelize.INTEGER
       },
-      category: {
+      catId: {
+        allowNull: false,
+        unique: true,
+        primaryKey: true,
+        type: Sequelize.STRING,
+      },
+      name: {
+        allowNull: false,
+        unique: true,
         type: Sequelize.STRING
       },
       createdAt: {

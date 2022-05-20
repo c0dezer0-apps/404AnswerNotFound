@@ -6,24 +6,27 @@ module.exports = {
       id: {
         allowNull: false,
         autoIncrement: true,
-        primaryKey: true,
         type: Sequelize.INTEGER
       },
-      pid: {
+      problemId: {
         allowNull: false,
         unique: true,
+        primaryKey: true,
         type: Sequelize.STRING,
       },
-      category: {
-				type: Sequelize.STRING,
+      subcatId: {
+        allowNull: false,
+				type: Sequelize.INTEGER,
 			},
 			createdBy: {
+        allowNull: false,
+        type: Sequelize.STRING,
+			},
+      lastModifiedBy: {
 				type: Sequelize.STRING,
 			},
-			lastModifiedBy: {
-				type: Sequelize.STRING,
-			},
-			lastModifiedDate: {
+      lastModifiedDate: {
+        allowNull: false,
 				type: Sequelize.DATE,
 			},
 			summary: {

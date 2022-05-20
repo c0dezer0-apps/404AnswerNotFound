@@ -11,28 +11,27 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      models.solution.belongsTo(models.user, {
-        foreignKey: 'uuid',
-        target: 'sid',
-      });
-      models.solution.belongsTo(models.problem, {
-        foreignKey: 'pid',
-        target: 'sid'
-      });
-      models.solution.belongsToMany(models.tag, {
-        through: 'solutions_tags',
-        foreignKey: 'sid',
-        otherKey: 'tid',
-      });
-      models.solution.hasMany(models.solutions_tags, { foreignKey: 'sid' });
+      models.solution.belongsTo(models.user);
+      models.solution.belongsTo(models.problem);
+      models.solution.belongsToMany(models.tag, { through: 'solutions_tags' });
+      models.solution.hasMany(models.solutions_tags);
     }
   }
 
   solution.init({
-    sid: {
+    solutionId: {
       allowNull: false,
       unique: true,
+      primaryKey: true,
       type: DataTypes.STRING,
+    },
+    problemId: {
+      allowNull: false,
+      type: DataTypes.STRING,
+      references: {
+        model: 'problem',
+        key: 'problemId',
+      }
     },
     createdBy: {
       type: DataTypes.STRING,

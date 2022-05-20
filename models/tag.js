@@ -10,17 +10,19 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      models.tag.belongsToMany(models.solution, {
-        through: 'solutions_tags',
-        foreignKey: 'tid',
-        otherKey: 'sid'
-      });
-      models.tag.hasMany(models.solutions_tags, { foreignKey: 'tid' });
+      models.tag.belongsToMany(models.solution, { through: 'solutions_tags' });
+      models.tag.belongsToMany(models.problem, { through: 'problems_tags' });
+      models.tag.hasMany(models.problems_tags);
+      models.tag.hasMany(models.solutions_tags);
+    }
+
+    static generateId() {
+      
     }
   }
   tag.init({
     name: DataTypes.STRING,
-    tid: {
+    tagId: {
       allowNull: false,
       unique: true,
       type: DataTypes.INTEGER,

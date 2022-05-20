@@ -6,13 +6,20 @@ module.exports = {
       id: {
         allowNull: false,
         autoIncrement: true,
-        primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      sid: {
+      solutionId: {
         allowNull: false,
         unique: true,
+        primaryKey: true,
         type: Sequelize.STRING,
+      },
+      problemId: {
+        type: Sequelize.STRING,
+        references: {
+          model: 'problem',
+          key: 'problemId'
+        },
       },
       content: {
         allowNull: false,

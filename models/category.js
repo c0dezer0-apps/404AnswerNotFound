@@ -10,11 +10,28 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      models.category.hasMany(models.problem, {
+        as: 'problems',
+        foreignKey: 'problemId',
+        sourceKey: 'catId'
+      });
+      models.category.hasMany(models.subcategory, {
+        foreignKey: 'subcatId',
+        sourceKey: 'catId'
+      })
     }
   };
   category.init({
-    category: DataTypes.STRING
+    catId: {
+      allowNull: false,
+      unique: true,
+      type: DataTypes.INTEGER,
+    },
+    name: {
+      allowNull: false,
+      unique: true,
+      type: DataTypes.STRING,
+    }
   }, {
     sequelize,
     modelName: 'category',

@@ -8,30 +8,52 @@ module.exports = (sequelize, DataTypes) => {
 		 * The `models/index` file will call this method automatically.
 		 */
 		static associate(models) {
-			models.problem.belongsTo(models.user, {
-				foreignKey: 'username',
-				target: 'createdBy',
-			});
-			models.problem.hasMany(models.solution);
-		}
-	}
+			models.problem.belongsTo(models.user);
+      models.problem.belongsTo(models.subcategory);
+      models.problem.hasMany(models.solution);
+      models.problem.hasMany(models.problems_tags);
+      models.problem.belongsToMany(models.tag, { through: 'problems_tags' });
+    }
+  }
+
 	problem.init(
     {
-      pid: {
+      problemId: {
         allowNull: false,
         unique: true,
+        primaryKey: true,
         type: DataTypes.STRING,
       },
-			category: {
-				type: DataTypes.STRING,
+      subcategory: {
+        allowNull: false,
+        references: {
+          model: 'subcategory',
+          key: 'subcatId',
+        },
+        field: 'subcatId',
+        type: DataTypes.INTEGER,
+        get() {
+          return `${this.getDataValue('subcategory').name}`;
+        }
+      },
+      createdBy: {
+        allowNull: false,
+        type: DataTypes.STRING,
+        references: {
+          model: 'user',
+          key: 'username'
+        }
 			},
-			createdBy: {
-				type: DataTypes.STRING,
+      lastModifiedBy: {
+        allowNull: false,
+        type: DataTypes.STRING,
+        references: {
+          model: 'user',
+          key: 'username'
+        }
 			},
-			lastModifiedBy: {
-				type: DataTypes.STRING,
-			},
-			lastModifiedDate: {
+      lastModifiedDate: {
+        allowNull: false,
 				type: DataTypes.DATE,
 			},
 			summary: {
@@ -59,8 +81,26 @@ module.exports = (sequelize, DataTypes) => {
 						msg: 'Details need to be at least 300 characters.',
 					},
 				}
-			},
+      },
 		},
+    {
+      instanceMethods: {
+        /* Generates the PID, a combination of the first and last letters of the category,
+        a formatted datetime string, and the first and last characters of the author's username
+        in uppercase separated by a hyphen. E.G jt0519202212830-AZ */
+        generateProblemId: function () {
+          const dateAsString = moment(this.lastModifiedDate).format('DDMMYYYYhmmss');
+
+          return this.category[0] + this.category[this.category.length - 1] + dateAsString +
+            '-' + this.createdBy[0].toUpper() + this.createdBy[this.createdBy.length - 1].toUpper();
+        },
+        // Sets pid with generatePID() and model.save();
+        generate: function () {
+          this.problemId = this.generateProblemId();
+          this.save();
+        },
+      },
+    },
 		{
 			sequelize,
 			modelName: 'problem',
