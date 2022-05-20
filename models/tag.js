@@ -1,8 +1,6 @@
 'use strict';
-const {
-  Model
-} = require('sequelize');
-module.exports = (sequelize, DataTypes) => {
+import { Model } from 'sequelize';
+export default (sequelize, DataTypes) => {
   class tag extends Model {
     /**
      * Helper method for defining associations.
@@ -15,9 +13,27 @@ module.exports = (sequelize, DataTypes) => {
       models.tag.hasMany(models.problems_tags);
       models.tag.hasMany(models.solutions_tags);
     }
-
-    static generateId() {
-      
+    static async generateTag(tagName) {
+      const lastEntry = this.findOne({
+        order: [['createdAt', 'DESC']]
+      });
+      const id = !lastEntry ? 1 : lastEntry.tagId + 1;
+      try {
+        const [tag, created] = await this.findOrCreate({
+          where: { tagId: id },
+          defaults: {
+            tagId: id,
+            name: tagName,
+          }
+        });
+        if (created)
+          console.log(`Tag ${tag.name} successfully created.`);
+        else
+          console.log(`Tag ${tag.name} already exists.`);
+      }
+      catch (err) {
+        console.log(`Something went wrong while trying to create tag.\n\n${err}`);
+      }
     }
   }
   tag.init({
