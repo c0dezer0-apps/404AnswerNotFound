@@ -10,7 +10,7 @@ module.exports = {
     dialect: 'postgres',
     encrypt: 'true'
   },
-  test: {
+  testing: {
     username: process.env.USERNAME,
     password: process.env.PASSWORD,
     database: process.env.TEST_DB,
@@ -20,6 +20,7 @@ module.exports = {
   },
   production: {
     use_env_variable: "DATABASE_URL",
+    use_heroku: true,
     dialectOptions: {
       ssl: {
         require: true,
