@@ -37,7 +37,7 @@ module.exports = {
         type: Sequelize.STRING(500)
       },
       profilePicture: {
-        type: Sequelize.STRING
+        type: Sequelize.BLOB('long'),
       },
       rating: {
         type: Sequelize.STRING

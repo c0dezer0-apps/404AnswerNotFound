@@ -18,10 +18,6 @@ module.exports = {
         allowNull: false,
 				type: Sequelize.INTEGER,
 			},
-			createdBy: {
-        allowNull: false,
-        type: Sequelize.STRING,
-			},
       lastModifiedBy: {
 				type: Sequelize.STRING,
 			},

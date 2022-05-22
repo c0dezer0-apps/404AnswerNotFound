@@ -14,13 +14,6 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.STRING,
       },
-      problemId: {
-        type: Sequelize.STRING,
-        references: {
-          model: 'problem',
-          key: 'problemId'
-        },
-      },
       content: {
         allowNull: false,
         type: Sequelize.TEXT,
@@ -32,10 +25,6 @@ module.exports = {
         allowNull: false,
         defaultValue: 0,
         type: Sequelize.INTEGER,
-      },
-      createdBy: {
-			  allowNull: false,
-        type: Sequelize.STRING,
       },
       lastModifiedBy: {
 			  allowNull: false,

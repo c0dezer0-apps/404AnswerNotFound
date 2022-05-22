@@ -1,17 +1,19 @@
 'use strict';
-import { Model } from 'sequelize';
-import bcrypt from 'bcrypt';
+const { Model } = require('sequelize');
+const bcrypt = require('bcrypt');
 
-export default (sequelize, DataTypes) => {
+module.exports = (sequelize, DataTypes) => {
 	class user extends Model {
 		/**
 		 * Helper method for defining associations.
 		 * This method is not a part of Sequelize lifecycle.
 		 * The `models/index` file will call this method automatically.
 		 */
-		static associate(models) {
+    static associate(models) {
+      models.user.hasOne(models.expertProfile);
 			models.user.hasMany(models.problem);
-			models.user.hasMany(models.solution);
+      models.user.hasMany(models.solution);
+      models.user.hasMany(models.complaint);
 		}
 
 		validPassword(passwordTyped) {
@@ -101,7 +103,6 @@ export default (sequelize, DataTypes) => {
 			},
 			title: {
 				type: DataTypes.STRING(25),
-				allowNull: true,
 				validate: {
 					max: {
 						args: 25,
@@ -111,7 +112,6 @@ export default (sequelize, DataTypes) => {
 			},
 			quote: {
 				type: DataTypes.STRING,
-				allowNull: true,
 				validate: {
 					max: {
 						args: 255,
@@ -122,7 +122,6 @@ export default (sequelize, DataTypes) => {
 			},
 			jobTitle: {
 				type: DataTypes.STRING(25),
-				allowNull: true,
 				validate: {
 					max: {
 						args: 25,
@@ -133,22 +132,22 @@ export default (sequelize, DataTypes) => {
 			},
 			bio: {
 				type: DataTypes.STRING(500),
-				allowNull: true,
 				validate: {
 					max: {
 						args: 500,
 						msg: 'Can only be 500 characters long.',
 					},
 				},
-			},
-			profilePicture: {
-				type: DataTypes.STRING,
-				allowNull: true,
-			},
-			rating: {
-				type: DataTypes.STRING,
-				allowNull: true,
-			},
+      },
+      externalLinks: DataTypes.JSON,
+      profilePicture: {
+        type: DataTypes.BLOB('long'),
+        references: {
+          model: 'image',
+          key: 'name'
+        }
+      },
+			rating: DataTypes.STRING,
 		},
 		{
 			sequelize,

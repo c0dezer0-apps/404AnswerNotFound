@@ -1,7 +1,7 @@
 'use strict';
-import { Model } from 'sequelize';
+const { Model } = require('sequelize');
 
-export default (sequelize, DataTypes) => {
+module.exports = (sequelize, DataTypes) => {
   class subcategory extends Model {
     /**
      * Helper method for defining associations.
@@ -12,6 +12,23 @@ export default (sequelize, DataTypes) => {
       models.subcategory.belongsTo(models.category);
       models.subcategory.hasMany(models.problem)
     }
+
+    static async createSubcategory(name) {
+      const lastEntry = await this.findOne({
+        order: [['subcatId', 'DESC']],
+      });
+      const id = !lastEntry ? 1 : lastEntry.subcatId + 1;
+
+      try {
+        await this.create({
+          subcatId: id,
+          name: name,
+        });
+      }
+      catch (err) {
+        console.log("Cannot create subcategory.\n", err);
+      }
+    }
   }
 
   subcategory.init({
@@ -20,21 +37,27 @@ export default (sequelize, DataTypes) => {
       allowNull: false,
       type: DataTypes.STRING,
     },
-    category: {
+    catId: {
       allowNull: false,
-      field: 'catId',
       references: {
         model: 'category',
         key: 'catId'
       },
       type: DataTypes.INTEGER,
+    },
+    category: {
+      type: DataTypes.VIRTUAL,
       get() {
-        return `${this.getDataValue('category').name}`
+        return this.catId.name;
+      },
+      set(value) {
+        throw error("You cannot set this!");
       }
-    }
-  }, {
-    sequelize,
-    modelName: 'subcategory',
+    },
+  },
+  {
+  sequelize,
+  modelName: 'subcategory',
   });
   return subcategory;
 };

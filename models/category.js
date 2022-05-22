@@ -1,7 +1,7 @@
 'use strict';
-import { Model } from 'sequelize';
+const { Model } = require('sequelize');
 
-export default (sequelize, DataTypes) => {
+module.exports = (sequelize, DataTypes) => {
   class category extends Model {
     /**
      * Helper method for defining associations.
@@ -20,6 +20,24 @@ export default (sequelize, DataTypes) => {
         sourceKey: 'catId'
       })
     }
+
+    static async createCategory(name, abb) {
+      const lastEntry = this.findOne({
+        order: [['catId', 'DESC']]
+      });
+      const id = !lastEntry ? 1 : lastEntry.catId + 1;
+
+      try {
+        await this.create({
+          catId: id,
+          name: name,
+          shorthand: abb,
+        });
+      }
+      catch (err) {
+        console.log("Something went wrong while creating the category.\n", err);
+      }
+    }
   };
 
   category.init({
@@ -32,6 +50,10 @@ export default (sequelize, DataTypes) => {
       allowNull: false,
       unique: true,
       type: DataTypes.STRING,
+    },
+    shorthand: {
+      unique: true,
+      type: DataTypes.CHAR(2),
     }
   }, {
     sequelize,

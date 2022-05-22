@@ -1,6 +1,8 @@
 'use strict';
-import { Model } from 'sequelize';
-export default (sequelize, DataTypes) => {
+
+const { Model } = require('sequelize');
+
+module.exports = (sequelize, DataTypes) => {
   class tag extends Model {
     /**
      * Helper method for defining associations.
@@ -13,11 +15,13 @@ export default (sequelize, DataTypes) => {
       models.tag.hasMany(models.problems_tags);
       models.tag.hasMany(models.solutions_tags);
     }
-    static async generateTag(tagName) {
+
+    static async createTag(tagName) {
       const lastEntry = this.findOne({
         order: [['createdAt', 'DESC']]
       });
       const id = !lastEntry ? 1 : lastEntry.tagId + 1;
+
       try {
         const [tag, created] = await this.findOrCreate({
           where: { tagId: id },
@@ -26,6 +30,7 @@ export default (sequelize, DataTypes) => {
             name: tagName,
           }
         });
+
         if (created)
           console.log(`Tag ${tag.name} successfully created.`);
         else
@@ -36,6 +41,7 @@ export default (sequelize, DataTypes) => {
       }
     }
   }
+
   tag.init({
     name: DataTypes.STRING,
     tagId: {
