@@ -14,7 +14,6 @@
     "ecmaVersion": 2020
   },
   "rules": {
-    "linebreak-style": ["error", "unix"],
     "no-unused-vars": "off",
     "camelcase": "error",
     "block-spacing": "error",
