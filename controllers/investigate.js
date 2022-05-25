@@ -13,25 +13,22 @@ router.use((req, res, next) => {
 =            Add inquisition to Database      =
 =============================================*/
 
-router.post('/create/inquisition', (req, res) => {
+router.post('/create/problem', (req, res) => {
   // Should redirect to the /inquiry/:id route below, showing the newly created inquisition.
   if (req.user) {
-    const { username } = req.user['dataValues'];
-    db['question']
-      .create({
-        createdBy: username,
-        summary: req.body.summary,
-        details: req.body.details,
-      })
+    db.problem.create({
+      summary: req.body.summary,
+      details: req.body.details,
+    })
       .then(question => {
         res.redirect('/');
       })
       .catch(err => {
-        db['bug'].create({
+        db.bug.create({
           error: `${err}`,
           location: 'create_inquisition_route',
           activity: `Creating inquisition`,
-          user: username,
+          user: req.user.dataValues.username,
           status: 'Untracked',
         });
       });
