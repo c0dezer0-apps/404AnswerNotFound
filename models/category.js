@@ -2,20 +2,20 @@
 const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
-  class category extends Model {
+  class Category extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      models.category.hasMany(models.problem, {
+      models.Category.hasMany(models.Problem, {
         as: 'problems',
         foreignKey: 'problemId',
         sourceKey: 'catId'
       });
 
-      models.category.hasMany(models.subcategory, {
+      models.Category.hasMany(models.Subcategory, {
         foreignKey: 'subcatId',
         sourceKey: 'catId'
       })
@@ -35,12 +35,12 @@ module.exports = (sequelize, DataTypes) => {
         });
       }
       catch (err) {
-        console.log("Something went wrong while creating the category.\n", err);
+        console.log("Something went wrong while creating the Category.\n", err);
       }
     }
   };
 
-  category.init({
+  Category.init({
     catId: {
       allowNull: false,
       unique: true,
@@ -57,7 +57,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {
     sequelize,
-    modelName: 'category',
+    modelName: 'Category',
   });
-  return category;
+  return Category;
 };

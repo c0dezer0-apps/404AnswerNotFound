@@ -3,7 +3,7 @@
 const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
-  class bug extends Model {
+  class Bug extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
 
-  bug.init({
+  Bug.init({
     error: DataTypes.TEXT,
     location: DataTypes.STRING,
     activity: DataTypes.STRING,
@@ -22,7 +22,7 @@ module.exports = (sequelize, DataTypes) => {
     status: DataTypes.STRING
   }, {
     sequelize,
-    modelName: 'bug',
+    modelName: 'Bug',
   });
-  return bug;
+  return Bug;
 };

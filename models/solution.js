@@ -1,43 +1,29 @@
 'use strict';
 const { Model } = require('sequelize');
+const moment = require('moment');
 
 module.exports = (sequelize, DataTypes) => {
-  class solution extends Model {
+  class Solution extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      models.solution.belongsTo(models.user, { as: 'author',  });
-      models.solution.belongsTo(models.problem);
-      models.solution.hasMany(models.solutions_tags);
-      models.solution.hasMany(models.complaint);
-      models.solution.hasMany(models.image);
-      models.solution.belongsToMany(models.tag, { through: 'solutions_tags' });
-    }
-
-    static async createSolution(user, data) {
-      const id = lastEntry ? lastEntry.solutionId + 1 : 1;
-      const lastEntry = await this.findOne({
-        order: [['solutionId', 'DESC']]
+      models.Solution.belongsTo(models.User, { as: 'author',  });
+      models.Solution.belongsTo(models.Problem);
+      models.Solution.hasMany(models.SolutionsTags, { as: 'tags'});
+      models.Solution.hasMany(models.Complaint);
+      models.Solution.hasMany(models.Image);
+      models.Solution.belongsToMany(models.Tag, { through: 'SolutionsTags' });
+      models.Solution.belongsToMany(models.Environment, {
+        through: "EnvironmentsSolutions",
       });
-
-      try {
-        const [solution, created] = await this.create({
-          solutionId: id,
-          lastModifiedDate: moment(),
-          ...data
-        });
-      }
-      catch (err) {
-        console.error(`Something went wrong while creating solution:\n\n${err}`);
-      }
     }
   }
 
-  solution.init({
-    solutionId: {
+  Solution.init({
+    SolutionId: {
       allowNull: false,
       unique: true,
       primaryKey: true,
@@ -69,7 +55,7 @@ module.exports = (sequelize, DataTypes) => {
     },
   }, {
     sequelize,
-    modelName: 'solution',
+    modelName: 'Solution',
   });
-  return solution;
+  return Solution;
 };

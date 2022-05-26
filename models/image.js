@@ -3,20 +3,20 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class image extends Model {
+  class Image extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      models.image.hasOne(models.user);
-      models.image.belongsTo(models.problem);
-      models.image.belongsTo(models.solution);
-      models.image.belongsTo(models.complaint);
+      models.Image.hasOne(models.User);
+      models.Image.belongsTo(models.Problem);
+      models.Image.belongsTo(models.Solution);
+      models.Image.belongsTo(models.Complaint);
     }
   }
-  image.init({
+  Image.init({
     imageId: {
       allowNull: false,
       primaryKey: true,
@@ -30,14 +30,14 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       type: DataTypes.STRING,
       validate: {
-        is: /^([a-z0-9\._-@#$ ])/gi
+        is: /^([._\-@#$ a-z0-9])/gi
       }
     },
     imageType: {
       allowNull: false,
       type: DataTypes.STRING,
       validate: {
-        is: /^(image\/[jpeg|png|svg+xml|bmp]+$)/gi,
+        is: /^(Image\/[jpeg|png|svg+xml|bmp]+$)/gi,
       },
     },
     uploader: {
@@ -50,7 +50,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {
     sequelize,
-    modelName: 'image',
+    modelName: 'Image',
   });
-  return image;
+  return Image;
 };

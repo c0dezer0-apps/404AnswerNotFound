@@ -9,8 +9,8 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      models.ProblemsTags.belongsTo(models.problem, { as: 'tags' });
-      models.ProblemsTags.belongsTo(models.tag, { as: 'tags' });
+      models.ProblemsTags.belongsTo(models.Problem);
+      models.ProblemsTags.belongsTo(models.Tag);
     }
   }
 

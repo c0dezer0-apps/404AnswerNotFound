@@ -3,17 +3,20 @@ const { Model } = require('sequelize');
 const bcrypt = require('bcrypt');
 
 module.exports = (sequelize, DataTypes) => {
-	class user extends Model {
+	class User extends Model {
 		/**
 		 * Helper method for defining associations.
 		 * This method is not a part of Sequelize lifecycle.
 		 * The `models/index` file will call this method automatically.
 		 */
     static associate(models) {
-      models.user.hasOne(models.expertProfile);
-			models.user.hasMany(models.problem);
-      models.user.hasMany(models.solution);
-      models.user.hasMany(models.complaint);
+      models.User.hasOne(models.ExpertProfile);
+			models.User.hasMany(models.Problem);
+      models.User.hasMany(models.Solution);
+      models.User.hasMany(models.Complaint);
+      models.User.belongsToMany(models.Environment, {
+        through: 'EnvironmentsUsers',
+      })
 		}
 
 		validPassword(passwordTyped) {
@@ -27,7 +30,7 @@ module.exports = (sequelize, DataTypes) => {
 		}
   }
 
-	user.init(
+	User.init(
     {
 			username: {
 				type: DataTypes.STRING(25),
@@ -151,12 +154,12 @@ module.exports = (sequelize, DataTypes) => {
 		},
 		{
 			sequelize,
-			modelName: 'user',
+			modelName: 'User',
 		}
 	);
 
-	user.beforeCreate((pendingUser, options) => {
-		// if a user exists and if user has a password.
+	User.beforeCreate((pendingUser, options) => {
+		// if a User exists and if User has a password.
 		if (pendingUser && pendingUser.password) {
 			// hash password
 			let hash = bcrypt.hashSync(pendingUser.password, 12);
@@ -165,5 +168,5 @@ module.exports = (sequelize, DataTypes) => {
 		}
   });
 
-	return user;
+	return User;
 };

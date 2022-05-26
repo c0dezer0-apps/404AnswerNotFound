@@ -3,17 +3,17 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class expertProfile extends Model {
+  class ExpertProfile extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      models.expertProfile.belongsTo(models.user)
+      models.ExpertProfile.belongsTo(models.User)
     }
   }
-  expertProfile.init({
+  ExpertProfile.init({
     expertId: {
       allowNull: false,
       primaryKey: true,
@@ -24,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
     roles: DataTypes.ARRAY(DataTypes.STRING),
   }, {
     sequelize,
-    modelName: 'expertProfile',
+    modelName: 'ExpertProfile',
   });
-  return expertProfile;
+  return ExpertProfile;
 };

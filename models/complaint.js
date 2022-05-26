@@ -3,38 +3,38 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class complaint extends Model {
+  class Complaint extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      models.complaint.hasOne(models.user);
-      models.complaint.belongsTo(models.problem);
-      models.complaint.belongsTo(models.solution);
-      models.complaint.belongsTo(models.user);
-      models.complaint.hasMany(models.image);
+      models.Complaint.hasOne(models.User);
+      models.Complaint.belongsTo(models.Problem);
+      models.Complaint.belongsTo(models.Solution);
+      models.Complaint.belongsTo(models.User);
+      models.Complaint.hasMany(models.Image);
     }
 
     static async createComplaint(data) {
-      const id = lastEntry ? lastEntry.complaintId + 1 : 1;
+      const id = lastEntry ? lastEntry.ComplaintId + 1 : 1;
       const lastEntry = await this.findOne({
-        order: [['complaintId', 'DESC']]
+        order: [['ComplaintId', 'DESC']]
       });
 
       try {
-        const [complaint, created] = this.create({
+        const [Complaint, created] = this.create({
           solutionId: id,
           ...data
         });
       } catch (err) {
-        console.error(`There was a problem while creating the complaint: \n${err}`);
+        console.error(`There was a problem while creating the Complaint: \n${err}`);
       }
     }
   }
-  complaint.init({
-    complaintId: {
+  Complaint.init({
+    ComplaintId: {
       allowNull: false,
       type: DataTypes.INTEGER,
     },
@@ -64,7 +64,7 @@ module.exports = (sequelize, DataTypes) => {
     adminNotes: DataTypes.TEXT
   }, {
     sequelize,
-    modelName: 'complaint',
+    modelName: 'Complaint',
   });
-  return complaint;
+  return Complaint;
 };

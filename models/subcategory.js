@@ -2,15 +2,15 @@
 const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
-  class subcategory extends Model {
+  class Subcategory extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      models.subcategory.belongsTo(models.category);
-      models.subcategory.hasMany(models.problem)
+      models.Subcategory.belongsTo(models.Category);
+      models.Subcategory.hasMany(models.Problem)
     }
 
     static async createSubcategory(name) {
@@ -26,12 +26,12 @@ module.exports = (sequelize, DataTypes) => {
         });
       }
       catch (err) {
-        console.log("Cannot create subcategory.\n", err);
+        console.log("Cannot create Subcategory.\n", err);
       }
     }
   }
 
-  subcategory.init({
+  Subcategory.init({
     name: DataTypes.STRING,
     subcatId: {
       allowNull: false,
@@ -51,13 +51,13 @@ module.exports = (sequelize, DataTypes) => {
         return this.catId.name;
       },
       set(value) {
-        throw error("You cannot set this!");
+        throw new Error("You cannot set this!");
       }
     },
   },
   {
   sequelize,
-  modelName: 'subcategory',
+  modeSName: 'Subcategory',
   });
-  return subcategory;
+  return Subcategory;
 };

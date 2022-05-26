@@ -3,55 +3,36 @@
 const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
-  class tag extends Model {
+  class Tag extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      models.tag.belongsToMany(models.solution, { through: 'solutions_tags' });
-      models.tag.belongsToMany(models.problem, { through: 'problems_tags' });
-      models.tag.hasMany(models.problems_tags);
-      models.tag.hasMany(models.solutions_tags);
-    }
-
-    static async createTag(tagName) {
-      const lastEntry = this.findOne({
-        order: [['createdAt', 'DESC']]
+      models.Tag.belongsToMany(models.Solution, {
+        through: 'SolutionsTags',
+        foreignKey: 'name',
+        otherKey: 'solutionId'
       });
-      const id = !lastEntry ? 1 : lastEntry.tagId + 1;
-
-      try {
-        const [tag, created] = await this.findOrCreate({
-          where: { tagId: id },
-          defaults: {
-            tagId: id,
-            name: tagName,
-          }
-        });
-
-        if (created)
-          console.log(`Tag ${tag.name} successfully created.`);
-        else
-          console.log(`Tag ${tag.name} already exists.`);
-      }
-      catch (err) {
-        console.log(`Something went wrong while trying to create tag.\n\n${err}`);
-      }
+      models.Tag.belongsToMany(models.Problem, {
+        through: 'ProblemsTags',
+      });
+      models.Tag.hasMany(models.ProblemsTags);
+      models.Tag.hasMany(models.SolutionsTags);
     }
   }
 
-  tag.init({
+  Tag.init({
     name: DataTypes.STRING,
-    tagId: {
+    TagId: {
       allowNull: false,
       unique: true,
       type: DataTypes.INTEGER,
     }
   }, {
     sequelize,
-    modelName: 'tag',
+    modelName: 'Tag',
   });
-  return tag;
+  return Tag;
 };
