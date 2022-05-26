@@ -14,9 +14,14 @@ module.exports = (sequelize, DataTypes) => {
 			models.User.hasMany(models.Problem);
       models.User.hasMany(models.Solution);
       models.User.hasMany(models.Complaint);
+      models.User.hasMany(models.UsersPermissions);
+      models.User.hasMany(models.EnvironmentsUsers)
       models.User.belongsToMany(models.Environment, {
         through: 'EnvironmentsUsers',
       })
+      models.User.belongsToMany(models.Permission, {
+        through: 'UsersPermissions'
+      });
 		}
 
 		validPassword(passwordTyped) {
