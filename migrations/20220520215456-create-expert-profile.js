@@ -4,16 +4,9 @@ module.exports = {
     await queryInterface.createTable('expertProfiles', {
       id: {
         allowNull: false,
-        autoIncrement: true,
-        type: Sequelize.INTEGER
-      },
-      expertId: {
+        defaultValue: Sequelize.UUIDV4,
         primaryKey: true,
-        defaultValue: Sequelize.UUID4,
         type: Sequelize.UUID
-      },
-      publicContactInfo: {
-        type: Sequelize.JSON
       },
       roles: {
         type: Sequelize.ARRAY(Sequelize.STRING)
