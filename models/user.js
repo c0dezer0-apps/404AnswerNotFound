@@ -10,7 +10,6 @@ module.exports = (sequelize, DataTypes) => {
 		 * The `models/index` file will call this method automatically.
 		 */
     static associate(models) {
-      models.User.hasOne(models.ExpertProfile);
 			models.User.hasMany(models.Problem);
       models.User.hasMany(models.Solution);
       models.User.hasMany(models.Complaint);
@@ -59,7 +58,7 @@ module.exports = (sequelize, DataTypes) => {
 					notEmpty: true,
 					notNull: true,
 				},
-			},
+      },
 			password: {
 				type: DataTypes.STRING,
 				allowNull: false,

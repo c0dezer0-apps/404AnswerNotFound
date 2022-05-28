@@ -25,11 +25,6 @@ module.exports = (sequelize, DataTypes) => {
 
   Tag.init({
     name: DataTypes.STRING,
-    TagId: {
-      allowNull: false,
-      unique: true,
-      type: DataTypes.INTEGER,
-    }
   }, {
     sequelize,
     modelName: 'Tag',
